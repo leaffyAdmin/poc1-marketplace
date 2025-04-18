@@ -19,25 +19,30 @@ const fontHeading = FontHeading({
 
 export const metadata: Metadata = {
   title: {
-    default: 'Leaffy @ earth - Your Plant Marketplace',
-    template: '%s | Leaffy @ earth'
+    default: 'LeaffyEarth - Your Plant Marketplace',
+    template: '%s | LeaffyEarth'
   },
   description: 'Find the perfect plants for your space. Premium quality plants with designer pots.',
   keywords: ['plants', 'indoor plants', 'pots', 'garden', 'home decor', 'plant marketplace'],
-  authors: [{ name: 'Leaffy @ earth' }],
-  creator: 'Leaffy @ earth',
+  authors: [{ name: 'LeaffyEarth' }],
+  creator: 'LeaffyEarth',
   metadataBase: new URL('https://leaffyearth.com'),
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/favicon.ico',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
     url: 'https://leaffyearth.com',
-    title: 'Leaffy @ earth - Your Plant Marketplace',
+    title: 'LeaffyEarth - Your Plant Marketplace',
     description: 'Find the perfect plants for your space. Premium quality plants with designer pots.',
-    siteName: 'Leaffy @ earth'
+    siteName: 'LeaffyEarth'
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Leaffy @ earth - Your Plant Marketplace',
+    title: 'LeaffyEarth - Your Plant Marketplace',
     description: 'Find the perfect plants for your space. Premium quality plants with designer pots.',
   },
   robots: {

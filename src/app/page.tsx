@@ -139,8 +139,8 @@ export default function Home() {
       />
       <BrandValues />
       <VideoSection
-        thumbnailUrl="/video-thumbnail.jpg"
-        videoUrl="https://www.youtube.com/watch?v=your-video-id"
+        thumbnailUrl="https://images.unsplash.com/photo-1625021217779-928660f4744e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        videoUrl="https://www.youtube.com/watch?v=T-ft0X_x7fw&t=7s"
       />
       <PlantExperience />
       <LandscapingSection />

@@ -25,8 +25,8 @@ const helpLinks: FooterLink[] = [
 
 const aboutLinks: FooterLink[] = [
   { label: 'Our Story', href: '/our-story' },
-  { label: 'Privacy Policy', href: '/privacy-policy' },
-  { label: 'Terms & Conditions', href: '/terms' },
+  { label: 'Privacy Policy', href: 'pages/privacy-policy' },
+  { label: 'Terms & Conditions', href: 'pages/terms-and-conditions' },
 ];
 
 const socialLinks = [
