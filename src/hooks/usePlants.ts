@@ -1,46 +1,57 @@
 'use client';
 
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { plantApi } from '@/lib/api';
-import type { IPlant, ICreatePlantRequest, IUpdatePlantRequest, IPlantsResponse, IPlantResponse } from '@/types/shop';
-import type { IPaginationParams } from '@/types/index';
+import { useQuery } from '@tanstack/react-query';
+import { plantApi } from '@/lib/api/plantApi';
+import { mockPlantService } from '@/lib/mockData/plants';
+import type { IPlant, IPlantFilters, IPlantsResponse } from '@/types/plant';
 
-export function usePlants(params?: IPaginationParams) {
-  const queryClient = useQueryClient();
+// TODO: Replace with real API service when backend is ready
+const plantService = mockPlantService;
 
-  const { data, isLoading, error } = useQuery<IPlantsResponse>({
-    queryKey: ['plants', params],
-    queryFn: () => plantApi.getPlants(params),
-  });
+export function usePlants(page: number = 1, limit: number = 12, filters?: IPlantFilters) {
+  const { data, isLoading, error } = useQuery<IPlantsResponse, Error>({
+    queryKey: ['plants', page, limit, filters],
+    // queryFn: () => plantApi.getPlants(page, limit, filters),  
 
-  const addPlant = useMutation<IPlantResponse, Error, ICreatePlantRequest>({
-    mutationFn: (newPlant) => plantApi.createPlant(newPlant),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['plants'] });
-    },
-  });
+    // TODO: Replace with real API service when backend is ready
+    queryFn: () => plantService.getPlants(page, limit, filters),
 
-  const updatePlant = useMutation<IPlantResponse, Error, { id: string; data: IUpdatePlantRequest }>({
-    mutationFn: ({ id, data }) => plantApi.updatePlant(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['plants'] });
-    },
-  });
-
-  const deletePlant = useMutation<void, Error, string>({
-    mutationFn: (id) => plantApi.deletePlant(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['plants'] });
-    },
   });
 
   return {
-    plants: data?.data.plants ?? [],
-    total: data?.data.total ?? 0,
+    plants: data?.plants ?? [],
+    total: data?.total ?? 0,
+    totalPages: data?.totalPages ?? 0,
+    page: data?.page ?? page,
     isLoading,
     error,
-    addPlant,
-    updatePlant,
-    deletePlant,
   };
+}
+
+export function usePlantCategories() {
+  return useQuery<string[], Error>({
+    queryKey: ['plantCategories'],
+    // queryFn: () => plantApi.getPlantCategories(),
+
+    // TODO: Replace with real API service when backend is ready
+    queryFn: () => plantService.getPlantCategories(),
+
+  });
+}
+
+export function usePlantById(id: string) {
+  return useQuery<IPlant, Error>({
+    queryKey: ['plant', id],
+    // queryFn: () => plantApi.getPlantById(id),
+    
+    // TODO: Replace with real API service when backend is ready
+    queryFn: async () => {
+      const plant = await plantService.getPlantById(id);
+      if (!plant) {
+        throw new Error('Plant not found');
+      }
+      return plant;
+    },
+    enabled: !!id,
+  });
 } 
