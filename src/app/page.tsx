@@ -69,10 +69,10 @@ const mockPlanters = [
 ];
 
 const shopTheLookData = {
-  imageUrl: "https://images.unsplash.com/photo-1650346910154-ed2b112fb83b?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+  imageUrl: "/shop-the-look.png",
   hotspots: [
     {
-      x: 28,
+      x: 35,
       y: 65,
       product: {
         id: '1',
@@ -80,11 +80,11 @@ const shopTheLookData = {
         price: 29.99,
         imageUrl: '/plants/maranta.jpg',
         slug: 'birds-nest-maranta',
-        type: 'plant'
+        type: 'plant' as const
       }
     },
     {
-      x: 62,
+      x: 58,
       y: 80,
       product: {
         id: 'p1',
@@ -92,11 +92,11 @@ const shopTheLookData = {
         price: 24.99,
         imageUrl: '/planter/fiddle-leaf-fig.jpg',
         slug: 'fiddle-leaf-fig',
-        type: 'plant'
+        type: 'plant' as const
       }
     },
     {
-      x: 82,
+      x: 73,
       y: 50,
       product: {
         id: '2',
@@ -104,7 +104,7 @@ const shopTheLookData = {
         price: 39.99,
         imageUrl: '/plants/rubber-plant.jpg',
         slug: 'rubber-plant',
-        type: 'plant'
+        type: 'plant' as const
       }
     }
   ]
