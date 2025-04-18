@@ -52,8 +52,8 @@ export default function PlantCatalog() {
     <div className="w-full bg-gray-50">
       <section className="max-w-8xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         {/* Filters */}
-        <div className="mb-8 bg-white p-6 rounded-lg shadow-sm">
-          <h2 className="text-lg font-semibold mb-4">Filter Plants</h2>
+        <div className="mb-8 py-6">
+          {/* <h2 className="text-lg font-semibold mb-4">Filter Plants</h2> */}
           <div className="flex flex-wrap gap-4">
             <div className="flex flex-col gap-1">
               <label htmlFor="category" className="text-sm text-gray-600">Category</label>
