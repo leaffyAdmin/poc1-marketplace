@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useCart } from '@/hooks/useCart';
@@ -10,9 +10,36 @@ import MobileMenu from './MobileMenu';
 const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const { items } = useCart();
   
   const cartItemsCount = items.length;
+
+  useEffect(() => {
+    const controlHeader = () => {
+      const currentScrollY = window.scrollY;
+      
+      // Show header in these cases:
+      // 1. Scrolling up
+      // 2. At the top of the page
+      // 3. Scrolled less than header height (for smooth initial scroll)
+      if (currentScrollY < lastScrollY || // Scrolling up
+          currentScrollY < 64 || // At top or near top (header height)
+          lastScrollY < 64) { // Initial scroll
+        setIsVisible(true);
+      } else if (currentScrollY > 64 && currentScrollY > lastScrollY) { // Scrolling down and past header
+        setIsVisible(false);
+        // Close search when hiding header
+        setIsSearchOpen(false);
+      }
+      
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener('scroll', controlHeader);
+    return () => window.removeEventListener('scroll', controlHeader);
+  }, [lastScrollY]);
 
   const navigation = [
     { name: 'PLANTS', href: '/plants' },
@@ -22,7 +49,11 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-white border-b border-gray-200">
+      <header 
+        className={`fixed top-0 left-0 right-0 bg-white border-b border-gray-200 z-50 transition-transform duration-300 ${
+          isVisible ? 'translate-y-0' : '-translate-y-full'
+        }`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Mobile menu button */}
@@ -98,7 +129,7 @@ const Header = () => {
 
         {/* Search Modal */}
         {isSearchOpen && (
-          <div className="absolute top-16 inset-x-0 bg-white border-b border-gray-200 p-4 z-40">
+          <div className="absolute top-16 inset-x-0 bg-white border-b border-gray-200 p-4">
             <div className="max-w-3xl mx-auto">
               <div className="relative">
                 <input
@@ -119,6 +150,9 @@ const Header = () => {
         setIsOpen={setIsMobileMenuOpen}
         navigation={navigation}
       />
+
+      {/* Spacer to prevent content from going under fixed header */}
+      <div className="h-16" />
     </>
   );
 };
